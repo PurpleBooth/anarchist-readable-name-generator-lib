@@ -1,6 +1,7 @@
 # anarchist-readable-name-generator-lib
 
-This library uses the authors from Anarchist Library to generate a
+This library uses the authors from [Anarchist
+Library](https://theanarchistlibrary.org/special/index) to generate a
 random name
 
 The intention here is to have a random name for situations you need to
