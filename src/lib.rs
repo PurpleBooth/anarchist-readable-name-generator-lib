@@ -1,3 +1,42 @@
+//! This library uses the authors from Anarchist Library to generate a random name
+//!
+//! The intention here is to have a random name for situations you need to spin up some cloud compute resources and don't have a name in mind. Typically, for throwaway purposes.
+//!
+//! # Examples
+//!
+//! It's possible to simply generate a random name
+//!
+//! ```
+//! use anarchist_readable_name_generator_lib::readable_name;
+//!
+//! assert!(readable_name().len() > 0)
+//! ```
+//!
+//! You can also pass a seed or change the separator to give you predictability or minor customization.
+//!
+//! ```
+//! use anarchist_readable_name_generator_lib::readable_name_custom;
+//! use rand::prelude::*;
+//! use rand_pcg::Pcg64;
+//!
+//! let rng = Pcg64::seed_from_u64(2);
+//! assert_eq!(
+//!    readable_name_custom("+", rng),
+//!    "engrossing+cazarabet"
+//! );
+//! ```
+
+#![warn(
+    rust_2018_idioms,
+    unused,
+    rust_2021_compatibility,
+    nonstandard_style,
+    future_incompatible,
+    missing_copy_implementations,
+    missing_debug_implementations,
+    missing_docs
+)]
+
 mod names;
 
 use names::ADJECTIVES;
@@ -5,6 +44,21 @@ use names::NAMES;
 use rand::prelude::*;
 use rand::seq::SliceRandom;
 
+/// Generate a readable name with some customization
+///
+/// # Examples
+///
+/// ```
+/// use anarchist_readable_name_generator_lib::readable_name_custom;
+/// use rand::prelude::*;
+/// use rand_pcg::Pcg64;
+///
+/// let rng = Pcg64::seed_from_u64(2);
+/// assert_eq!(
+///    readable_name_custom("+", rng),
+///    "engrossing+cazarabet"
+/// );
+/// ```
 #[must_use]
 pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
     format!(
@@ -19,6 +73,15 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
     )
 }
 
+/// Generate a readable name with some customization
+///
+/// # Examples
+///
+/// ```
+/// use anarchist_readable_name_generator_lib::readable_name;
+///
+/// assert!(readable_name().len() > 0)
+/// ```
 #[must_use]
 pub fn readable_name() -> String {
     let rng = thread_rng();
@@ -53,4 +116,16 @@ mod test_readable_name_custom {
             readable_name_custom("_", rng_2)
         );
     }
+}
+
+#[cfg(doctest)]
+mod test_readme {
+    macro_rules! external_doc_test {
+        ($x:expr) => {
+            #[doc = $x]
+            extern "C" {}
+        };
+    }
+
+    external_doc_test!(include_str!("../README.md"));
 }
