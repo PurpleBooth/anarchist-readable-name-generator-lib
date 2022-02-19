@@ -4,7 +4,7 @@ description = "Generate a readable name from something with with famous anarchis
 version = "0.1.0"
 edition = "2021"
 license = "CC0-1.0"
-repository = "git@github.com:PurpleBooth/anarchist-readable-name-generator-lib.git"
+repository = "https://github.com/PurpleBooth/anarchist-readable-name-generator-lib.git"
 keywords = ["names", "utility"]
 categories = ["development-tools::testing","command-line-interface"]
 
