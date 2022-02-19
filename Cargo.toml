@@ -1,7 +1,12 @@
 [package]
-name = "anarchist-readable-name-generator"
+name = "anarchist-readable-name-generator-lib"
+description = "Generate a readable name from something with with famous anarchist writers"
 version = "0.1.0"
 edition = "2021"
+license = "CC0-1.0"
+repository = "git@github.com:PurpleBooth/anarchist-readable-name-generator-lib.git"
+keywords = ["names", "utility"]
+categories = ["development-tools::testing","command-line-interface"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
