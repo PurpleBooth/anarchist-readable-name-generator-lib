@@ -30,4 +30,4 @@ predictability or minor customization.
     );
 
 Read more at
-[Docs.rs](https://docs.rs/anarchist-readable-name-generator/)
+[Docs.rs](https://docs.rs/anarchist-readable-name-generator-lib/)
