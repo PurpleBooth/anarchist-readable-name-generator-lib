@@ -34,6 +34,8 @@ jobs:
       - name: Get tags
         run: git fetch --tags origin
       - shell: bash
+        run: cargo binstall --no-confirm cargo-edit
+      - shell: bash
         run: cargo binstall --no-confirm --locked cocogitto
       - id: previous_version
         run: |

@@ -2,7 +2,10 @@ tag_prefix = "v"
 from_latest_tag = true
 ignore_merge_commits = true
 branch_whitelist = ["main"]
-pre_bump_hooks = []
+pre_bump_hooks = [
+    "cargo set-version --workspace {{version}}",
+    "cargo build --release",
+]
 post_bump_hooks = [
     "git push",
     "git push origin v{{version}}",
