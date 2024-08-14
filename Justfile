@@ -14,7 +14,7 @@ build:
 bench:
 	cargo bench
 
-# Lint it
+# Lint the project
 lint:
 	cargo +nightly fmt --all -- --check
 	cargo +nightly clippy --all-features -- -D warnings -Dclippy::all -D clippy::pedantic -D clippy::cargo
