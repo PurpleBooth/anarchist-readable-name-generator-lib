@@ -59,6 +59,10 @@ use rand::seq::SliceRandom;
 ///    "engrossing+cazarabet"
 /// );
 /// ```
+///
+/// # Panics
+///
+/// Should not panic, would panic if there were no ADJECTIVES or if NAMES (both constants guaranteed not to be empty)
 #[must_use]
 pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
     format!(
@@ -102,7 +106,7 @@ mod test_readable_name_custom {
             .split('-')
             .map(String::from)
             .collect::<Vec<_>>();
-        assert!(!split.get(0).unwrap().is_empty());
+        assert!(!split.first().unwrap().is_empty());
         assert!(!split.get(1).unwrap().is_empty());
         assert_eq!(split.len(), 2);
     }
