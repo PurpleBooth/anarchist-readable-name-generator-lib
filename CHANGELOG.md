@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.1.3 - 2025-02-09
+#### Bug Fixes
+- Swap test RNG to ChaCha and bump rand to v0.9.0 - (0de9a15) - Billie Thompson
+#### Continuous Integration
+- move to forgejo - (ff090c6) - Billie Thompson
+#### Miscellaneous Chores
+- unused file - (449504b) - PurpleBooth
+
+- - -
+
 ## v0.1.2 - 2024-08-14
 #### Bug Fixes
 - Test release as it's been some time - (e2a09de) - Billie Thompson
