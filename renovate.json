@@ -2,5 +2,13 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>PurpleBooth/renovate-config"
+  ],
+  "packageRules": [
+    {
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "rangeStrategy": "widen"
+    }
   ]
 }
