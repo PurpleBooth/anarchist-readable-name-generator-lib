@@ -21,12 +21,12 @@ predictability or minor customization.
 
     use anarchist_readable_name_generator_lib::readable_name_custom;
     use rand::prelude::*;
-    use rand_pcg::Pcg64;
+    use rand_chacha::ChaChaRng;
 
-    let rng = Pcg64::seed_from_u64(2);
+    let rng = ChaChaRng::seed_from_u64(2);
     assert_eq!(
     readable_name_custom("+", rng),
-    "engrossing+cazarabet"
+    "romantic+kamalmaz"
     );
 
 Read more at

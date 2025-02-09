@@ -17,12 +17,12 @@
 //! ```
 //! use anarchist_readable_name_generator_lib::readable_name_custom;
 //! use rand::prelude::*;
-//! use rand_pcg::Pcg64;
+//! use rand_chacha::ChaChaRng;
 //!
-//! let rng = Pcg64::seed_from_u64(2);
+//! let rng = ChaChaRng::seed_from_u64(2);
 //! assert_eq!(
 //!    readable_name_custom("+", rng),
-//!    "engrossing+cazarabet"
+//!    "romantic+kamalmaz"
 //! );
 //! ```
 
@@ -41,8 +41,8 @@ mod names;
 
 use names::ADJECTIVES;
 use names::NAMES;
-use rand::prelude::*;
-use rand::seq::SliceRandom;
+use rand::seq::IndexedRandom;
+use rand::Rng;
 
 /// Generate a readable name with some customization
 ///
@@ -51,12 +51,12 @@ use rand::seq::SliceRandom;
 /// ```
 /// use anarchist_readable_name_generator_lib::readable_name_custom;
 /// use rand::prelude::*;
-/// use rand_pcg::Pcg64;
+/// use rand_chacha::ChaChaRng;
 ///
-/// let rng = Pcg64::seed_from_u64(2);
+/// let rng = ChaChaRng::seed_from_u64(2);
 /// assert_eq!(
 ///    readable_name_custom("+", rng),
-///    "engrossing+cazarabet"
+///    "romantic+kamalmaz"
 /// );
 /// ```
 ///
@@ -88,7 +88,7 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
 /// ```
 #[must_use]
 pub fn readable_name() -> String {
-    let rng = thread_rng();
+    let rng = rand::rng();
     readable_name_custom("_", rng)
 }
 
@@ -97,11 +97,10 @@ mod test_readable_name_custom {
     use super::readable_name_custom;
 
     use rand::prelude::*;
-    use rand_pcg::Pcg64;
 
     #[test]
     fn it_generates_a_name_with_a_custom_separator() {
-        let rng = thread_rng();
+        let rng = rand::rng();
         let split = readable_name_custom("-", rng)
             .split('-')
             .map(String::from)
@@ -113,8 +112,8 @@ mod test_readable_name_custom {
 
     #[test]
     fn it_can_be_made_predictable_with_a_known_seed() {
-        let rng_1 = Pcg64::seed_from_u64(2);
-        let rng_2 = Pcg64::seed_from_u64(2);
+        let rng_1 = rand_chacha::ChaChaRng::seed_from_u64(2);
+        let rng_2 = rand_chacha::ChaChaRng::seed_from_u64(2);
         assert_eq!(
             readable_name_custom("_", rng_1),
             readable_name_custom("_", rng_2)
