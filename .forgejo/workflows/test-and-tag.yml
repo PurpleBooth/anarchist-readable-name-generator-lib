@@ -259,3 +259,27 @@ jobs:
           fi
         env:
           CARGO_TOKEN: ${{ secrets.CARGO_TOKEN }}
+
+  codeberg-release:
+    if: needs.release.outputs.current_version != needs.release.outputs.previous_version
+    name: Create release
+    runs-on: docker
+    needs:
+      - release
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        name: Checkout the repository
+        with:
+          ref: v${{ needs.release.outputs.current_version }}
+      - id: release_option_prep
+        run: |
+          echo "sha=$(git rev-parse  HEAD)" >> $GITHUB_OUTPUT
+        shell: bash
+      - uses: https://code.forgejo.org/actions/forgejo-release@v2
+        with:
+          token: ${{ secrets.FJ_TOKEN }}
+          sha: ${{ steps.release_option_prep.outputs.sha }}
+          direction: upload
+          title: Release v${{ needs.release.outputs.current_version }}
+          tag: v${{ needs.release.outputs.current_version }}
+          release-notes: ${{ needs.release.outputs.changelog }}
