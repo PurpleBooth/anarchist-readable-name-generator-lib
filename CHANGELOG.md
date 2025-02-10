@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.1.4 - 2025-02-10
+#### Bug Fixes
+- Test release - (f4da23f) - Billie Thompson
+#### Continuous Integration
+- create forgejo release - (62c93f6) - Billie Thompson
+- Configure Renovate to widen dependency ranges - (a35da06) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** pin dependencies - (545429c) - Solace System Renovate Fox
+
+- - -
+
 ## v0.1.3 - 2025-02-09
 #### Bug Fixes
 - Swap test RNG to ChaCha and bump rand to v0.9.0 - (0de9a15) - Billie Thompson
