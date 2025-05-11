@@ -1,7 +1,7 @@
 [package]
 name = "anarchist-readable-name-generator-lib"
 description = "Generate a readable name from something with with famous anarchist writers"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 license = "CC0-1.0"
 repository = "https://codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib"

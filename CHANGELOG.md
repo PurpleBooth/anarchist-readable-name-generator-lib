@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.1.5 - 2025-05-11
+#### Bug Fixes
+- mark extern block as unsafe in doc test macro - (206066d) - Billie Thompson (aider)
+#### Build system
+- Update repository URL in Cargo.toml - (1c3541e) - Billie Thompson
+#### Miscellaneous Chores
+- **(deps)** update https://code.forgejo.org/actions/cache digest to 5a3ec84 - (1a2f336) - Solace System Renovate Fox
+- **(deps)** update https://code.forgejo.org/actions/cache digest to 0c907a7 - (128f8ec) - Solace System Renovate Fox
+- update Rust edition, dependencies, and CI workflows - (b9b17d4) - Billie Thompson
+#### Style
+- Reorganize and update lint attributes in lib.rs - (97fab7e) - Billie Thompson
+
+- - -
+
 ## v0.1.4 - 2025-02-10
 #### Bug Fixes
 - Test release - (f4da23f) - Billie Thompson
