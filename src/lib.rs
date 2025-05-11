@@ -26,23 +26,31 @@
 //! );
 //! ```
 
-#![warn(
-    rust_2018_idioms,
+#![warn(clippy::nursery)]
+#![deny(
     unused,
-    rust_2021_compatibility,
     nonstandard_style,
     future_incompatible,
     missing_copy_implementations,
     missing_debug_implementations,
-    missing_docs
+    missing_docs,
+    clippy::cargo,
+    clippy::complexity,
+    clippy::correctness,
+    clippy::perf,
+    clippy::style,
+    clippy::suspicious,
+    clippy::pedantic,
+    non_fmt_panics
 )]
+#![allow(clippy::multiple_crate_versions)]
 
 mod names;
 
 use names::ADJECTIVES;
 use names::NAMES;
-use rand::seq::IndexedRandom;
 use rand::Rng;
+use rand::seq::IndexedRandom;
 
 /// Generate a readable name with some customization
 ///
