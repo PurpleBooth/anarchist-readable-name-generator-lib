@@ -97,7 +97,7 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
 /// let rng = ChaChaRng::seed_from_u64(2);
 /// assert_eq!(
 ///    readable_name_custom_suffix("+", rng),
-///    "dynamic+lepper2"
+///    "dynamic+lepper3"
 /// );
 /// ```
 ///
@@ -106,7 +106,7 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
 /// Should not panic, would panic if there were no ADJECTIVES or if NAMES (both constants guaranteed not to be empty)
 #[must_use]
 pub fn readable_name_custom_suffix<R: Rng>(seperator: &str, mut rng: R) -> String {
-    let suffix = rng.random_range(0..9);
+    let suffix = rng.random_range(0..=9);
 
     format!("{}{}", readable_name_custom(seperator, &mut rng), suffix)
 }
@@ -158,7 +158,7 @@ mod test_readable_name_custom {
     #[test]
     fn it_can_add_a_random_number_to_the_end_to_make_it_unique() {
         let rng_1 = ChaChaRng::seed_from_u64(2);
-        assert_eq!(readable_name_custom_suffix("_", rng_1), "dynamic_lepper2");
+        assert_eq!(readable_name_custom_suffix("_", rng_1), "dynamic_lepper3");
     }
 }
 

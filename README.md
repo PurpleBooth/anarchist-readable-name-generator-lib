@@ -43,7 +43,7 @@ use rand_chacha::ChaChaRng;
 let rng = ChaChaRng::seed_from_u64(2);
 assert_eq!(
     readable_name_custom_suffix("+", rng),
-    "dynamic+lepper2"
+    "dynamic+lepper3"
 );
 ```
 
