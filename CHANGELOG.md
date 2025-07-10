@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.2.0 - 2025-07-10
+#### Bug Fixes
+- update random range to include 9 in suffix generation - (2c72dce) - Billie Thompson
+#### Continuous Integration
+- run less often - (f9ed88d) - PurpleBooth
+- set a lower retension - (dba3c0d) - PurpleBooth
+- use library preset - (b6f1743) - PurpleBooth
+#### Features
+- add random numeric suffix to readable name generator - (eb18e60) - Billie Thompson
+
+- - -
+
 ## v0.1.5 - 2025-05-11
 #### Bug Fixes
 - mark extern block as unsafe in doc test macro - (206066d) - Billie Thompson (aider)
