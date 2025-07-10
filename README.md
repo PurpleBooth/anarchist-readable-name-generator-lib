@@ -12,22 +12,40 @@ Typically, for throwaway purposes.
 
 It's possible to simply generate a random name
 
+```rust
     use anarchist_readable_name_generator_lib::readable_name;
 
-    assert!(readable_name().len() > 0)
+assert!(readable_name().len() > 0);
+```
 
 You can also pass a seed or change the separator to give you
 predictability or minor customization.
 
+```rust
     use anarchist_readable_name_generator_lib::readable_name_custom;
-    use rand::prelude::*;
-    use rand_chacha::ChaChaRng;
+use rand::prelude::*;
+use rand_chacha::ChaChaRng;
 
-    let rng = ChaChaRng::seed_from_u64(2);
-    assert_eq!(
+let rng = ChaChaRng::seed_from_u64(2);
+assert_eq!(
     readable_name_custom("+", rng),
     "romantic+kamalmaz"
-    );
+);
+```
+
+You can also increase entropy a little by suffixing a random number
+
+```rust
+ use anarchist_readable_name_generator_lib::readable_name_custom_suffix;
+use rand::prelude::*;
+use rand_chacha::ChaChaRng;
+
+let rng = ChaChaRng::seed_from_u64(2);
+assert_eq!(
+    readable_name_custom_suffix("+", rng),
+    "dynamic+lepper2"
+);
+```
 
 Read more at
 [Docs.rs](https://docs.rs/anarchist-readable-name-generator-lib/)

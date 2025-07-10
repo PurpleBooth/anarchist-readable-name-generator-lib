@@ -85,6 +85,32 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
     )
 }
 
+/// Generate a readable name with some customization and a random numeric suffix
+///
+/// # Examples
+///
+/// ```
+/// use anarchist_readable_name_generator_lib::{readable_name_custom_suffix};
+/// use rand::prelude::*;
+/// use rand_chacha::ChaChaRng;
+///
+/// let rng = ChaChaRng::seed_from_u64(2);
+/// assert_eq!(
+///    readable_name_custom_suffix("+", rng),
+///    "dynamic+lepper2"
+/// );
+/// ```
+///
+/// # Panics
+///
+/// Should not panic, would panic if there were no ADJECTIVES or if NAMES (both constants guaranteed not to be empty)
+#[must_use]
+pub fn readable_name_custom_suffix<R: Rng>(seperator: &str, mut rng: R) -> String {
+    let suffix = rng.random_range(0..9);
+
+    format!("{}{}", readable_name_custom(seperator, &mut rng), suffix)
+}
+
 /// Generate a readable name with some customization
 ///
 /// # Examples
@@ -102,9 +128,10 @@ pub fn readable_name() -> String {
 
 #[cfg(test)]
 mod test_readable_name_custom {
-    use super::readable_name_custom;
+    use super::{readable_name_custom, readable_name_custom_suffix};
 
     use rand::prelude::*;
+    use rand_chacha::ChaChaRng;
 
     #[test]
     fn it_generates_a_name_with_a_custom_separator() {
@@ -120,12 +147,18 @@ mod test_readable_name_custom {
 
     #[test]
     fn it_can_be_made_predictable_with_a_known_seed() {
-        let rng_1 = rand_chacha::ChaChaRng::seed_from_u64(2);
-        let rng_2 = rand_chacha::ChaChaRng::seed_from_u64(2);
+        let rng_1 = ChaChaRng::seed_from_u64(2);
+        let rng_2 = ChaChaRng::seed_from_u64(2);
         assert_eq!(
             readable_name_custom("_", rng_1),
             readable_name_custom("_", rng_2)
         );
+    }
+
+    #[test]
+    fn it_can_add_a_random_number_to_the_end_to_make_it_unique() {
+        let rng_1 = ChaChaRng::seed_from_u64(2);
+        assert_eq!(readable_name_custom_suffix("_", rng_1), "dynamic_lepper2");
     }
 }
 
