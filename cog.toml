@@ -1,7 +1,7 @@
 tag_prefix = "v"
 from_latest_tag = true
 ignore_merge_commits = true
-branch_whitelist = ["main"]
+branch_whitelist = ["main", "HEAD"]
 pre_bump_hooks = [
     "cargo set-version --workspace {{version}}",
     "cargo build --release",
