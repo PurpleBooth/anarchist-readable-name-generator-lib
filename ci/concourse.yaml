@@ -526,6 +526,7 @@ resources:
       uri: ssh://git@codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib.git
       branch: main
       private_key: ((vault:git.private_key))
+      fetch_tags: true
     webhook_token: ((vault:webhook.token))
   - name: task
     type: git
