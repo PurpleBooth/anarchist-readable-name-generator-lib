@@ -536,10 +536,10 @@ resources:
     icon: docker
     check_every: 24h
     source:
-      password: ((vault:gar.password))
       repository: europe-west10-docker.pkg.dev/purplebooth-gke/optimistic-robbie/ci-runtime-env
       tag: latest
       username: ((vault:gar.username))
+      password: ((vault:gar.password))
     type: registry-image
   - name: docker-rust
     icon: docker
@@ -547,6 +547,8 @@ resources:
     source:
       repository: europe-west10-docker.pkg.dev/purplebooth-gke/optimistic-robbie/ci-runtime-env
       tag: rust
+      username: ((vault:gar.username))
+      password: ((vault:gar.password))
     type: registry-image
   - name: pr
     type: gitea-pr
