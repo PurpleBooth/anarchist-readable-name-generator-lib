@@ -545,8 +545,8 @@ resources:
     icon: docker
     check_every: 24h
     source:
-      repository: ghcr.io/catthehacker/ubuntu
-      tag: rust-latest
+      repository: europe-west10-docker.pkg.dev/purplebooth-gke/optimistic-robbie/ci-runtime-env
+      tag: rust
     type: registry-image
   - name: pr
     type: gitea-pr
