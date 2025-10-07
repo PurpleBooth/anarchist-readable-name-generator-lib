@@ -381,6 +381,10 @@ jobs:
           DEFAULT_BRANCH: main
           GPG_SIGNING_PRIVATE_KEY: ((gpg.signing_private_key))
           GPG_SIGNING_PRIVATE_PASSWORD: ((gpg.signing_private_password))
+          GIT_AUTHOR_NAME: Solace System Renovate Fox [bot]
+          GIT_AUTHOR_EMAIL: renovate@solace-system.co.uk
+          GIT_COMMITTER_NAME: Solace System Renovate Fox [bot]
+          GIT_COMMITTER_EMAIL: renovate@solace-system.co.uk
         task: release-with-cog
       - try:
           do:
