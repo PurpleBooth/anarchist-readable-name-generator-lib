@@ -63,7 +63,7 @@ jobs:
         trigger: true
       - get: ci-runtime-env
         passed: [verify-runtime-env]
-      - get:  ci-rust-env
+      - get: ci-rust-env
         passed: [verify-rust-env]
       - get: task
       - get: repo-main
@@ -147,7 +147,7 @@ jobs:
         vars:
           fail-on: critical
       - task: rust-fmt-check
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -170,7 +170,7 @@ jobs:
                 EXPECTED_AUTHOR_NAME: Solace System Renovate Fox [bot]
                 EXPECTED_COMMIT_SUBJECT: 'style(rust-fmt): apply auto-fixes'
             - task: rust-fmt-fix
-              image:  ci-rust-env
+              image: ci-rust-env
               input_mapping:
                 src: repo-main
               output_mapping:
@@ -208,7 +208,7 @@ jobs:
               get_params:
                 skip_download: true
       - task: rust-clippy
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -231,7 +231,7 @@ jobs:
                 EXPECTED_AUTHOR_NAME: Solace System Renovate Fox [bot]
                 EXPECTED_COMMIT_SUBJECT: 'style(clippy): apply auto-fixes'
             - task: rust-clippy-fix
-              image:  ci-rust-env
+              image: ci-rust-env
               input_mapping:
                 src: repo-main
               output_mapping:
@@ -274,7 +274,7 @@ jobs:
               get_params:
                 skip_download: true
       - task: rust-check
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -297,7 +297,7 @@ jobs:
                 EXPECTED_AUTHOR_NAME: Solace System Renovate Fox [bot]
                 EXPECTED_COMMIT_SUBJECT: 'style(cargo-check): apply auto-fixes'
             - task: rust-check-fix
-              image:  ci-rust-env
+              image: ci-rust-env
               input_mapping:
                 src: repo-main
               output_mapping:
@@ -335,7 +335,7 @@ jobs:
               get_params:
                 skip_download: true
       - task: rust-test
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -387,7 +387,7 @@ jobs:
       - get: task
       - get: ci-runtime-env
         passed: [verify-runtime-env]
-      - get:  ci-rust-env
+      - get: ci-rust-env
         passed: [validate-main, verify-rust-env]
       - file: task/concourse/tasks/cog-bump/task.yml
         image: ci-rust-env
@@ -412,7 +412,7 @@ jobs:
       - try:
           do:
             - task: cargo-publish
-              image:  ci-rust-env
+              image: ci-rust-env
               input_mapping:
                 src: repo-main
               config:
@@ -443,7 +443,7 @@ jobs:
       - get: task
       - get: ci-runtime-env
         passed: [verify-runtime-env]
-      - get:  ci-rust-env
+      - get: ci-rust-env
         passed: [verify-rust-env]
       - get: pr
         trigger: true
@@ -475,7 +475,7 @@ jobs:
         vars:
           fail-on: critical
       - task: rust-fmt-check
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -487,7 +487,7 @@ jobs:
             dir: src
             args: [fmt, --, --check]
       - task: rust-clippy
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -499,7 +499,7 @@ jobs:
             dir: src
             args: [clippy, --all-features]
       - task: rust-check
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -511,7 +511,7 @@ jobs:
             dir: src
             args: [check]
       - task: rust-test
-        image:  ci-rust-env
+        image: ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -570,7 +570,7 @@ resources:
       username: ((vault:gar.username))
       password: ((vault:gar.password))
     type: registry-image
-  - name:  ci-rust-env
+  - name: ci-rust-env
     icon: docker
     check_every: 24h
     source:
