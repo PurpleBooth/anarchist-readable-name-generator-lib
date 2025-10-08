@@ -34,6 +34,28 @@ jobs:
           COSIGN_PASSWORD: ((vault:cosign.password))
           COSIGN_PRIVATE_KEY: ((vault:cosign.private_key))
           COSIGN_PUBLIC_KEY: ((vault:cosign.public_key))
+  - name: verify-rust-env
+    plan:
+      - get: task
+      - get: ci-rust-env
+        trigger: true
+      - load_var: tag
+        file: ci-rust-env/tag
+      - load_var: digest
+        file: ci-rust-env/digest
+      - task: cosign-verify-registry-image
+        file: task/concourse/tasks/cosign-verify-registry-image/task.yaml
+        input_mapping:
+          task: task
+          image: ci-rust-env
+        params:
+          DOCKER_REGISTRY: europe-west10-docker.pkg.dev
+          DOCKER_USERNAME: ((vault:gar.username))
+          DOCKER_PASSWORD: ((vault:gar.password))
+          IMAGE: europe-west10-docker.pkg.dev/purplebooth-gke/optimistic-robbie/ci-runtime-env:((.:tag))@((.:digest))
+          COSIGN_PASSWORD: ((vault:cosign.password))
+          COSIGN_PRIVATE_KEY: ((vault:cosign.private_key))
+          COSIGN_PUBLIC_KEY: ((vault:cosign.public_key))
   - name: validate-main
     public: true
     plan:
@@ -41,7 +63,7 @@ jobs:
         trigger: true
       - get: ci-runtime-env
         passed: [verify-runtime-env]
-      - get: docker-rust
+      - get:  ci-rust-env
       - get: task
       - get: repo-main
         trigger: true
@@ -124,7 +146,7 @@ jobs:
         vars:
           fail-on: critical
       - task: rust-fmt-check
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -147,7 +169,7 @@ jobs:
                 EXPECTED_AUTHOR_NAME: Solace System Renovate Fox [bot]
                 EXPECTED_COMMIT_SUBJECT: 'style(rust-fmt): apply auto-fixes'
             - task: rust-fmt-fix
-              image: docker-rust
+              image:  ci-rust-env
               input_mapping:
                 src: repo-main
               output_mapping:
@@ -185,7 +207,7 @@ jobs:
               get_params:
                 skip_download: true
       - task: rust-clippy
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -208,7 +230,7 @@ jobs:
                 EXPECTED_AUTHOR_NAME: Solace System Renovate Fox [bot]
                 EXPECTED_COMMIT_SUBJECT: 'style(clippy): apply auto-fixes'
             - task: rust-clippy-fix
-              image: docker-rust
+              image:  ci-rust-env
               input_mapping:
                 src: repo-main
               output_mapping:
@@ -251,7 +273,7 @@ jobs:
               get_params:
                 skip_download: true
       - task: rust-check
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -274,7 +296,7 @@ jobs:
                 EXPECTED_AUTHOR_NAME: Solace System Renovate Fox [bot]
                 EXPECTED_COMMIT_SUBJECT: 'style(cargo-check): apply auto-fixes'
             - task: rust-check-fix
-              image: docker-rust
+              image:  ci-rust-env
               input_mapping:
                 src: repo-main
               output_mapping:
@@ -312,7 +334,7 @@ jobs:
               get_params:
                 skip_download: true
       - task: rust-test
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: repo-main
         config:
@@ -364,10 +386,10 @@ jobs:
       - get: task
       - get: ci-runtime-env
         passed: [verify-runtime-env]
-      - get: docker-rust
+      - get:  ci-rust-env
         passed: [validate-main]
       - file: task/concourse/tasks/cog-bump/task.yml
-        image: ci-runtime-env
+        image: ci-rust-env
         output_mapping:
           src: repo-main
           bump: bump
@@ -389,7 +411,7 @@ jobs:
       - try:
           do:
             - task: cargo-publish
-              image: docker-rust
+              image:  ci-rust-env
               input_mapping:
                 src: repo-main
               config:
@@ -420,7 +442,7 @@ jobs:
       - get: task
       - get: ci-runtime-env
         passed: [verify-runtime-env]
-      - get: docker-rust
+      - get:  ci-rust-env
       - get: pr
         trigger: true
         version: every
@@ -451,7 +473,7 @@ jobs:
         vars:
           fail-on: critical
       - task: rust-fmt-check
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -463,7 +485,7 @@ jobs:
             dir: src
             args: [fmt, --, --check]
       - task: rust-clippy
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -475,7 +497,7 @@ jobs:
             dir: src
             args: [clippy, --all-features]
       - task: rust-check
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -487,7 +509,7 @@ jobs:
             dir: src
             args: [check]
       - task: rust-test
-        image: docker-rust
+        image:  ci-rust-env
         input_mapping:
           src: pr
         config:
@@ -524,9 +546,9 @@ resources:
     check_every: 24h
     source:
       uri: ssh://git@codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib.git
+      fetch_tags: true
       branch: main
       private_key: ((vault:git.private_key))
-      fetch_tags: true
     webhook_token: ((vault:webhook.token))
   - name: task
     type: git
@@ -546,7 +568,7 @@ resources:
       username: ((vault:gar.username))
       password: ((vault:gar.password))
     type: registry-image
-  - name: docker-rust
+  - name:  ci-rust-env
     icon: docker
     check_every: 24h
     source:
