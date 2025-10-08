@@ -143,7 +143,7 @@ jobs:
         input_mapping:
           src: repo-main
         vars:
-          fail-on: critical
+          fail-on: CRITICAL
       - task: rust-fmt-check
         image: ci-rust-env
         input_mapping:
