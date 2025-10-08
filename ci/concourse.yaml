@@ -136,12 +136,10 @@ jobs:
           src: repo-main
       - task: trufflehog
         file: task/concourse/tasks/trufflehog-git/task.yaml
-        image: ci-runtime-env
         input_mapping:
           src: repo-main
       - task: trivy
         file: task/concourse/tasks/trivy-filesystem/task.yaml
-        image: ci-runtime-env
         input_mapping:
           src: repo-main
         vars:
@@ -463,13 +461,11 @@ jobs:
         input_mapping:
           src: pr
       - task: trufflehog-git
-        image: ci-runtime-env
         file: task/concourse/tasks/trufflehog-git/task.yaml
         input_mapping:
           src: pr
       - task: trivy
         file: task/concourse/tasks/trivy-filesystem/task.yaml
-        image: ci-runtime-env
         input_mapping:
           src: pr
         vars:
