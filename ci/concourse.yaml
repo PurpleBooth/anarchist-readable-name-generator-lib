@@ -64,6 +64,7 @@ jobs:
       - get: ci-runtime-env
         passed: [verify-runtime-env]
       - get:  ci-rust-env
+        passed: [verify-rust-env]
       - get: task
       - get: repo-main
         trigger: true
@@ -387,7 +388,7 @@ jobs:
       - get: ci-runtime-env
         passed: [verify-runtime-env]
       - get:  ci-rust-env
-        passed: [validate-main]
+        passed: [validate-main, verify-rust-env]
       - file: task/concourse/tasks/cog-bump/task.yml
         image: ci-rust-env
         output_mapping:
@@ -443,6 +444,7 @@ jobs:
       - get: ci-runtime-env
         passed: [verify-runtime-env]
       - get:  ci-rust-env
+        passed: [verify-rust-env]
       - get: pr
         trigger: true
         version: every
