@@ -59,7 +59,7 @@ jobs:
   - name: validate-main
     public: true
     plan:
-      - get: 24h
+      - get: 1h
         trigger: true
       - get: ci-runtime-env
         passed: [verify-runtime-env]
@@ -538,14 +538,14 @@ jobs:
 # Resources
 # -----------------------------------------------------------------------------
 resources:
-  - name: 24h
+  - name: 1h
     type: time
     icon: hours-24
-    source: {interval: 24h, location: Europe/Berlin}
+    source: {interval: 1h, location: Europe/Berlin}
   - name: repo-main
     type: git
     icon: git
-    check_every: 24h
+    check_every: 1h
     source:
       uri: ssh://git@codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib.git
       fetch_tags: true
@@ -555,7 +555,7 @@ resources:
   - name: task
     type: git
     icon: git
-    check_every: 24h
+    check_every: 1h
     source:
       uri: ssh://git@codeberg.org/PurpleBooth/common-pipelines.git
       branch: main
@@ -563,7 +563,7 @@ resources:
     webhook_token: ((vault:webhook.token))
   - name: ci-runtime-env
     icon: docker
-    check_every: 24h
+    check_every: 1h
     source:
       repository: europe-west10-docker.pkg.dev/purplebooth-gke/optimistic-robbie/ci-runtime-env
       tag: latest
@@ -572,7 +572,7 @@ resources:
     type: registry-image
   - name: ci-rust-env
     icon: docker
-    check_every: 24h
+    check_every: 1h
     source:
       repository: europe-west10-docker.pkg.dev/purplebooth-gke/optimistic-robbie/ci-runtime-env
       tag: rust
