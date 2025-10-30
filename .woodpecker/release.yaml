@@ -26,9 +26,8 @@ steps:
   push:
     image: appleboy/drone-git-push
     settings:
-      remote_name: origin
       branch: main
-      local_ref: main
+      followtags: true
 
 depends_on:
   - test
