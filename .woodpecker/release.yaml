@@ -1,4 +1,9 @@
-
+clone:
+  git:
+    image: woodpeckerci/plugin-git
+    settings:
+      partial: false
+      depth: -1
 when:
   event:
     - push
@@ -7,12 +12,6 @@ when:
       - main
 
 steps:
-  clone:
-    image: woodpeckerci/plugin-git
-    settings:
-      depth: -1          # full clone
-      partial: false     # make sure we don’t do a blobless checkout
-
   release:
     image: rust
     environment:
