@@ -1,0 +1,49 @@
+when:
+  event: [push, pull_request]
+
+matrix:
+  RUST: [stable, beta, nightly]
+
+steps:
+  lint:
+    image: rust
+    environment:
+      CARGO_TERM_COLOR: always
+    commands:
+      - rustup default $RUST
+      - rustup component add rustfmt
+      - rustup component add clippy
+      - cargo fmt --all -- --check
+      - cargo clippy
+      - cargo check
+
+  test:
+    image: rust
+    environment:
+      CARGO_TERM_COLOR: always
+    commands:
+      - rustup default $RUST
+      - cargo test
+
+  audit:
+    image: woodpeckerci/plugin-trivy
+    commands:
+      - trivy fs .
+
+  release:
+    image: rust
+    depends_on:
+      - audit
+      - lint
+      - test
+    when:
+      branch:
+        include:
+          - main
+    environment:
+      CARGO_TERM_COLOR: always
+    commands:
+      - rustup default $RUST
+      - cargo install cargo-binstall
+      - cargo binstall --locked cocogitto
+      - cog bump --auto
