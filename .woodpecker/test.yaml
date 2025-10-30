@@ -29,23 +29,3 @@ steps:
     image: woodpeckerci/plugin-trivy
     commands:
       - trivy fs .
-
-  release:
-    image: rust
-    depends_on:
-      - audit
-      - lint
-      - test
-    when:
-      matrix:
-        RUST: stable
-      branch:
-        include:
-          - main
-    environment:
-      CARGO_TERM_COLOR: always
-    commands:
-      - rustup default $RUST
-      - cargo install cargo-binstall
-      - cargo binstall --locked cocogitto
-      - cog bump --auto

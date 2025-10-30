@@ -1,0 +1,21 @@
+
+when:
+  event:
+    - push
+  branch:
+    include:
+      - main
+
+steps:
+  release:
+    image: rust
+    environment:
+      CARGO_TERM_COLOR: always
+    commands:
+      - rustup default $RUST
+      - cargo install cargo-binstall
+      - cargo binstall --locked cocogitto
+      - cog bump --auto
+
+depends_on:
+  - test
