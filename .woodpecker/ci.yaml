@@ -37,6 +37,8 @@ steps:
       - lint
       - test
     when:
+      matrix:
+        RUST: stable
       branch:
         include:
           - main
