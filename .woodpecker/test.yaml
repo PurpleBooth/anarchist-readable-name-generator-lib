@@ -10,6 +10,7 @@ steps:
       CARGO_TERM_COLOR: always
     commands:
       - rustup default $RUST
+      - rustup component add rustfmt
       - cargo fmt --all -- --check
       - cargo clippy
       - cargo check
