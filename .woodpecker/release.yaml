@@ -3,7 +3,8 @@ clone:
     image: woodpeckerci/plugin-git
     settings:
       partial: false
-      depth: -1
+      depth: 0
+
 when:
   event:
     - push
