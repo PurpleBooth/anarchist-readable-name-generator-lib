@@ -9,7 +9,7 @@ matrix:
 
 steps:
   cache:
-    image: quay.io/radicle_garden/plugin-sccache
+    image: sebastinez/plugin-sccache
     volumes:
       - sccache:/sccache_data
     settings:
