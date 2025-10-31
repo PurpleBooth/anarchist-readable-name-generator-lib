@@ -9,7 +9,6 @@ clone:
       tags: true
       ssh-key:
         from_secret: GIT_PRIVATE_KEY
-      use-ssh: true
 
 runs_on:
   - success
