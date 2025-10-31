@@ -22,7 +22,7 @@ when:
 
 steps:
   cache:
-    image: sebastinez/plugin-sccache:latest
+    image: quay.io/radicle_garden/plugin-sccache
     volumes:
       - sccache:/sccache_data
     settings:
