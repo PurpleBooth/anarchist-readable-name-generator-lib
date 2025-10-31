@@ -29,5 +29,5 @@ steps:
       - sccache:/sccache_data
     commands:
       - export PATH="/sccache_data:$PATH"
-      - source .sccache
+      - . .sccache
       - cargo publish

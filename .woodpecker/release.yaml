@@ -45,7 +45,7 @@ steps:
       - sccache:/sccache_data
     commands:
       - export PATH="/sccache_data:$PATH"
-      - source .sccache
+      - . .sccache
       - rustup default $RUST
       - cargo install cargo-binstall
       - cargo binstall --locked cargo-edit
