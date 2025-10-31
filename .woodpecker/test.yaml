@@ -1,8 +1,5 @@
 when:
   event: [push, pull_request]
-  branch:
-    exclude:
-      - main
 
 matrix:
   RUST: [stable, beta, nightly]
