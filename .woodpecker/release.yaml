@@ -27,7 +27,7 @@ steps:
       CARGO_TERM_COLOR: always
     commands:
       - rustup default $RUST
-      - cargo install cargo-binstall
+      - curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
       - cargo binstall --locked cargo-edit
       - cargo binstall --locked cocogitto
       - git config user.name "Solace System Renovate Fox [bot]"
