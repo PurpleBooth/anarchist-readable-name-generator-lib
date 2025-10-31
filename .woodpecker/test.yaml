@@ -5,11 +5,30 @@ matrix:
   RUST: [stable, beta, nightly]
 
 steps:
+  cache:
+    image: sebastinez/plugin-sccache:latest
+    volumes:
+      - sccache:/sccache_data
+    settings:
+      s3-endpoint:
+        from_secret: SCCACHE_AWS_ENDPOINT_URL
+      s3-bucket:
+        from_secret: SCCACHE_BUCKET
+      s3-key-prefix: anarchist-readable-name-generator-lib
+      s3-access_key:
+        from_secret: SCCACHE_AWS_SECRET_KEY
+      s3-secret_key:
+        from_secret: SCCACHE_AWS_ACCESS_KEY_ID
+
   lint:
     image: rust
     environment:
       CARGO_TERM_COLOR: always
+    volumes:
+      - sccache:/sccache_data
     commands:
+      - export PATH="/sccache_data:$PATH"
+      - source .sccache
       - rustup default $RUST
       - rustup component add rustfmt
       - rustup component add clippy
@@ -21,11 +40,19 @@ steps:
     image: rust
     environment:
       CARGO_TERM_COLOR: always
+    volumes:
+      - sccache:/sccache_data
     commands:
+      - export PATH="/sccache_data:$PATH"
+      - source .sccache
       - rustup default $RUST
       - cargo test
 
   audit:
     image: woodpeckerci/plugin-trivy
+    volumes:
+      - sccache:/sccache_data
     commands:
+      - export PATH="/sccache_data:$PATH"
+      - source .sccache
       - trivy fs .

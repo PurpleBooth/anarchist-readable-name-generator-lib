@@ -2,11 +2,33 @@ when:
   event:
     - tag
 
+
+
 steps:
-  - image: rust
+  cache:
+    image: sebastinez/plugin-sccache:latest
+    volumes:
+      - sccache:/sccache_data
+    settings:
+      s3-endpoint:
+        from_secret: SCCACHE_AWS_ENDPOINT_URL
+      s3-bucket:
+        from_secret: SCCACHE_BUCKET
+      s3-key-prefix: anarchist-readable-name-generator-lib
+      s3-access_key:
+        from_secret: SCCACHE_AWS_SECRET_KEY
+      s3-secret_key:
+        from_secret: SCCACHE_AWS_ACCESS_KEY_ID
+
+  publish:
+    image: rust
     environment:
       CARGO_TERM_COLOR: always
       CARGO_REGISTRY_TOKEN:
         from_secret: CARGO_REGISTRY_TOKEN
+    volumes:
+      - sccache:/sccache_data
     commands:
+      - export PATH="/sccache_data:$PATH"
+      - source .sccache
       - cargo publish
