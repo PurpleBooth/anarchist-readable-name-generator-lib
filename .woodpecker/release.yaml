@@ -28,6 +28,8 @@ steps:
       - curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
       - cargo binstall --locked cargo-edit
       - cargo binstall --locked cocogitto
+      - git config user.name "Solace System Renovate Fox [bot]"
+      - git config user.email renovate@solace-system.co.uk
       - cog bump --auto
 
   push:
