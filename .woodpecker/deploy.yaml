@@ -20,6 +20,7 @@ steps:
       save-if: true
 
   publish:
+    entrypoint: ["/bin/bash", "-c"]
     depends_on:
       - cache
     image: rust

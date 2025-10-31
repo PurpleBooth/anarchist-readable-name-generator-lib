@@ -41,6 +41,7 @@ steps:
     depends_on:
       - cache
     image: rust
+    entrypoint: ["/bin/bash", "-c"]
     environment:
       CARGO_TERM_COLOR: always
     volumes:
