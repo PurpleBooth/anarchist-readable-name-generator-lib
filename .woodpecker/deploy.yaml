@@ -20,6 +20,8 @@ steps:
       save-if: true
 
   publish:
+    depends_on:
+      - cache
     image: rust
     environment:
       CARGO_TERM_COLOR: always

@@ -38,6 +38,8 @@ steps:
       save-if: true
 
   release:
+    depends_on:
+      - cache
     image: rust
     environment:
       CARGO_TERM_COLOR: always
@@ -55,6 +57,8 @@ steps:
       - cog bump --auto
 
   push:
+    depends_on:
+      - release
     image: appleboy/drone-git-push
     settings:
       branch: main

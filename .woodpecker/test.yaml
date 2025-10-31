@@ -22,6 +22,8 @@ steps:
       save-if: true
 
   lint:
+    depends_on:
+      - cache
     image: rust
     environment:
       CARGO_TERM_COLOR: always
@@ -38,6 +40,8 @@ steps:
       - cargo check
 
   test:
+    depends_on:
+      - cache
     image: rust
     environment:
       CARGO_TERM_COLOR: always
@@ -50,6 +54,8 @@ steps:
       - cargo test
 
   audit:
+    depends_on:
+      - cache
     image: woodpeckerci/plugin-trivy
     volumes:
       - sccache:/sccache_data
