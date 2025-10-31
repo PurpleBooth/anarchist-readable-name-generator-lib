@@ -10,7 +10,6 @@ matrix:
 steps:
   lint:
     image: rust
-    entrypoint: ["/bin/bash", "-c", "echo $CI_SCRIPT | base64 -d | /bin/bash -e"]
     environment:
       CARGO_TERM_COLOR: always
     commands:
@@ -23,7 +22,6 @@ steps:
 
   test:
     image: rust
-    entrypoint: ["/bin/bash", "-c", "echo $CI_SCRIPT | base64 -d | /bin/bash -e"]
     environment:
       CARGO_TERM_COLOR: always
     commands:
