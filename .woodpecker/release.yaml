@@ -39,6 +39,7 @@ steps:
       - release
     image: appleboy/drone-git-push
     settings:
+      remote: ssh://git@codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib.git
       branch: main
       followtags: true
       ssh_key:
