@@ -1,41 +1,18 @@
 when:
-  event: [push]
+  event: [push, pull_request]
   branch:
-    include:
+    exclude:
       - main
 
 matrix:
   RUST: [stable, beta, nightly]
 
 steps:
-  cache:
-    image: sebastinez/plugin-sccache
-    volumes:
-      - sccache:/sccache_data
-    settings:
-      s3-endpoint:
-        from_secret: SCCACHE_AWS_ENDPOINT_URL
-      s3-bucket:
-        from_secret: SCCACHE_BUCKET
-      s3-key-prefix: anarchist-readable-name-generator-lib
-      s3-access-key:
-        from_secret: SCCACHE_AWS_ACCESS_KEY_ID
-      s3-secret-key:
-        from_secret: SCCACHE_AWS_SECRET_KEY
-      save-if: true
-
   lint:
-    depends_on:
-      - cache
     image: rust
-    entrypoint: ["/bin/bash", "-c", "echo $CI_SCRIPT | base64 -d | /bin/bash -e"]
     environment:
       CARGO_TERM_COLOR: always
-    volumes:
-      - sccache:/sccache_data
     commands:
-      - export PATH="/sccache_data:$PATH"
-      - . .sccache
       - rustup default $RUST
       - rustup component add rustfmt
       - rustup component add clippy
@@ -44,27 +21,14 @@ steps:
       - cargo check
 
   test:
-    depends_on:
-      - cache
     image: rust
-    entrypoint: ["/bin/bash", "-c", "echo $CI_SCRIPT | base64 -d | /bin/bash -e"]
     environment:
       CARGO_TERM_COLOR: always
-    volumes:
-      - sccache:/sccache_data
     commands:
-      - export PATH="/sccache_data:$PATH"
-      - . .sccache
       - rustup default $RUST
       - cargo test
 
   audit:
-    depends_on:
-      - cache
     image: woodpeckerci/plugin-trivy
-    volumes:
-      - sccache:/sccache_data
     commands:
-      - export PATH="/sccache_data:$PATH"
-      - . .sccache
       - trivy fs .
