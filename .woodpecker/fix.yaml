@@ -1,3 +1,9 @@
+depends_on:
+  - lint
+
+runs_on:
+  - failure
+
 clone:
   git:
     image: woodpeckerci/plugin-git
@@ -9,9 +15,6 @@ clone:
       tags: true
       ssh-key:
         from_secret: GIT_PRIVATE_KEY
-
-runs_on:
-  - success
 
 when:
   event:
@@ -27,12 +30,15 @@ steps:
       CARGO_TERM_COLOR: always
     commands:
       - rustup default $RUST
-      - curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-      - cargo binstall --locked cargo-edit
-      - cargo binstall --locked cocogitto
-      - git config user.name "Solace System Renovate Fox [bot]"
-      - git config user.email renovate@solace-system.co.uk
-      - cog bump --auto
+      - rustup component add rustfmt
+      - rustup component add clippy
+      - cargo fix
+      - cargo clippy --fix --all-features
+      - cargo fmt --all
+      - cargo fmt --all -- --check
+      - cargo clippy
+      - cargo check
+      - cargo test
 
   push:
     depends_on:
@@ -42,9 +48,9 @@ steps:
       remote: ssh://git@codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib.git
       branch: main
       followtags: true
+      commit: true
+      author_name: Solace System Renovate Fox [bot]
+      author_email: renovate@solace-system.co.uk
+      commit_message: "chore: formatting"
       ssh_key:
         from_secret: GIT_PRIVATE_KEY
-
-depends_on:
-  - test
-  - lint
