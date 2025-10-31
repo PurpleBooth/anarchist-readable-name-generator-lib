@@ -2,8 +2,6 @@ when:
   event:
     - tag
 
-
-
 steps:
   cache:
     image: quay.io/radicle_garden/plugin-sccache
@@ -19,6 +17,7 @@ steps:
         from_secret: SCCACHE_AWS_SECRET_KEY
       s3-secret_key:
         from_secret: SCCACHE_AWS_ACCESS_KEY_ID
+      save-if: true
 
   publish:
     image: rust
