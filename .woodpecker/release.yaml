@@ -6,6 +6,7 @@ clone:
       depth: 0
       git-user-name: Solace System Renovate Fox [bot]
       git-user-email: renovate@solace-system.co.uk
+      tags: true
 
 runs_on:
   - success
