@@ -20,7 +20,7 @@ steps:
       save-if: true
 
   publish:
-    entrypoint: ["/bin/bash", "-c"]
+    entrypoint: ["/bin/bash", "-c", "echo $CI_SCRIPT | base64 -d | /bin/bash -e"]
     depends_on:
       - cache
     image: rust

@@ -41,7 +41,7 @@ steps:
     depends_on:
       - cache
     image: rust
-    entrypoint: ["/bin/bash", "-c"]
+    entrypoint: ["/bin/bash", "-c", "echo $CI_SCRIPT | base64 -d | /bin/bash -e"]
     environment:
       CARGO_TERM_COLOR: always
     volumes:
