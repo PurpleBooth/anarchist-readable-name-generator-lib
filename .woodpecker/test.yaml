@@ -1,5 +1,8 @@
 when:
   event: [push, pull_request]
+  path:
+    exclude:
+      - CHANGELOG.md
 
 matrix:
   RUST: [stable, beta, nightly]

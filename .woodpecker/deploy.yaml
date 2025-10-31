@@ -1,6 +1,7 @@
 when:
   event:
     - tag
+    - release
 
 steps:
   publish:
