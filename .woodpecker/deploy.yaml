@@ -13,9 +13,9 @@ steps:
       s3-bucket:
         from_secret: SCCACHE_BUCKET
       s3-key-prefix: anarchist-readable-name-generator-lib
-      s3-access_key:
+      s3-access-key:
         from_secret: SCCACHE_AWS_ACCESS_KEY_ID
-      s3-secret_key:
+      s3-secret-key:
         from_secret: SCCACHE_AWS_SECRET_KEY
       save-if: true
 
