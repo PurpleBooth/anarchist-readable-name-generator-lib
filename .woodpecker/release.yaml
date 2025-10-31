@@ -24,7 +24,7 @@ steps:
     environment:
       CARGO_TERM_COLOR: always
     commands:
-      - rustup default "$RUST"
+      - rustup default stable
       - curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
       - cargo binstall --locked cargo-edit
       - cargo binstall --locked cocogitto
