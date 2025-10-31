@@ -40,6 +40,8 @@ steps:
     settings:
       branch: main
       followtags: true
+      ssh_key:
+        from_secret: GIT_PRIVATE_KEY
 
 depends_on:
   - test
