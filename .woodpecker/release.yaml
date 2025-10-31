@@ -23,10 +23,7 @@ steps:
     image: rust
     environment:
       CARGO_TERM_COLOR: always
-      SSH_PRIVATE_KEY:
-        from_secret: GIT_PRIVATE_KEY
     commands:
-      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
       - rustup default "$RUST"
       - curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
       - cargo binstall --locked cargo-edit
