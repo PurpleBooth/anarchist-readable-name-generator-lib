@@ -13,7 +13,6 @@ steps:
     volumes:
       - sccache:/sccache_data
     settings:
-      s3-use-ssl: true
       s3-endpoint:
         from_secret: SCCACHE_AWS_ENDPOINT_URL
       s3-bucket:
