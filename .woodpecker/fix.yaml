@@ -8,13 +8,8 @@ clone:
   git:
     image: woodpeckerci/plugin-git
     settings:
-      partial: false
-      depth: 0
       git-user-name: Solace System Renovate Fox [bot]
       git-user-email: renovate@solace-system.co.uk
-      tags: true
-      ssh-key:
-        from_secret: GIT_PRIVATE_KEY
 
 when:
   event:
