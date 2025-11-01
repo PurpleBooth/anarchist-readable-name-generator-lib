@@ -35,8 +35,9 @@ steps:
       - mkdir -p ~/.ssh/
       - chmod 700 ~/.ssh/
       - echo "$$GIT_PRIVATE_KEY" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
       - ssh-keyscan -t rsa codeberg.org >> ~/.ssh/known_hosts
+      - chmod 600 ~/.ssh/known_hosts ~/.ssh/id_rsa
+      - git config --global url."git@codeberg.org:".insteadOf "https://codeberg.org/"
       - cog bump --auto
       - git push origin main --follow-tags
 
