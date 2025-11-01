@@ -40,6 +40,7 @@ steps:
       - git config --global url."git@codeberg.org:".insteadOf "https://codeberg.org/"
       - cog bump --auto
       - git push origin main --follow-tags
+      - git push origin main --tags
 
 depends_on:
   - test
