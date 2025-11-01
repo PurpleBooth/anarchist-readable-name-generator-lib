@@ -38,7 +38,7 @@ steps:
       - chmod 600 ~/.ssh/id_rsa
       - ssh-keyscan -t rsa codeberg.org >> ~/.ssh/known_hosts
       - cog bump --auto
-      - git push --follow-tags
+      - git push origin main --follow-tags
 
 depends_on:
   - test
