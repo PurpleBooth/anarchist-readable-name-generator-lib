@@ -5,7 +5,7 @@ clone:
       partial: false
       depth: 0
       git-user-name: &git-user-name Solace System Renovate Fox [bot]
-      git-user-email: &git-user-email renovate@solace-system.co.uk
+      git-user-email: &git-user-email solace-system-renovate-fox@example.com
       tags: true
 
 runs_on:
@@ -37,15 +37,24 @@ steps:
       - git config user.name "$GIT_USER_NAME"
       - git config user.email "$GIT_USER_EMAIL"
 
+      # Configure ssh for Codeberg
+      - mkdir -p ~/.ssh/
+      - chmod 700 ~/.ssh/
+      - echo "$$GIT_PRIVATE_KEY" > ~/.ssh/id_rsa
+      - ssh-keyscan -t rsa codeberg.org >> ~/.ssh/known_hosts
+      - chmod 600 ~/.ssh/known_hosts ~/.ssh/id_rsa
+      - git config url."git@codeberg.org:".insteadOf "https://codeberg.org/"
+
       # Import the PGP key
       - echo "$GPG_PRIVATE_KEY" | gpg --batch --yes --import
-      - echo "$GPG_PASSWORD" | gpg --batch --yes --passphrase-fd 0 --pinentry-mode loopback --command-fd 0 --edit-key $(echo "$GPG_PRIVATE_KEY" | gpg --list-packets | grep -m1 keyid | cut -d' ' -f2) trust quit
+      - gpg --export-ownertrust | sed 's/:.*/:5:/' | gpg --import-ownertrust
+      - echo "$GPG_PASSWORD" | /usr/lib/gnupg/gpg-preset-passphrase --preset "$(gpg --with-keygrip --list-secret-keys | grep -A1 "sec" | tail -n1 | awk '{print $1}')"
 
-      # Configure git for PGP signing
+      # Configure git for PGP signing (no password needed now)
       - git config gpg.format openpgp
-      - git config user.signingkey $(echo "$GPG_PRIVATE_KEY" | gpg --list-packets | grep -m1 keyid | cut -d' ' -f2)
+      - git config user.signingkey $(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
       - git config commit.gpgsign true
-
+      -
       # Set up git for Codeberg
       - git config url."git@codeberg.org:".insteadOf "https://codeberg.org/"
       - cog bump --auto
