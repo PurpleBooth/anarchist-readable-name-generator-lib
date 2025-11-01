@@ -54,7 +54,6 @@ steps:
       - git config gpg.format openpgp
       - git config user.signingkey $(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
       - git config commit.gpgsign true
-      -
       # Set up git for Codeberg
       - git config url."git@codeberg.org:".insteadOf "https://codeberg.org/"
       - cog bump --auto
