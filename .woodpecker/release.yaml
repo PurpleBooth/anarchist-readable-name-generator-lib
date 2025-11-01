@@ -25,6 +25,8 @@ steps:
       GIT_USER_NAME: *git-user-name
       GIT_USER_EMAIL: *git-user-email
       CARGO_TERM_COLOR: always
+      GIT_PRIVATE_KEY:
+        from_secret: GIT_PRIVATE_KEY
       GPG_PRIVATE_KEY:
         from_secret: SIGNING_PRIVATE_KEY
       GPG_PASSWORD:
@@ -62,7 +64,6 @@ steps:
       - git config commit.gpgsign true
 
       # Set up git for Codeberg
-      - git config url."git@codeberg.org:".insteadOf "https://codeberg.org/"
       - cog bump --auto
       - git push origin main --follow-tags
       - git push origin main --tags
