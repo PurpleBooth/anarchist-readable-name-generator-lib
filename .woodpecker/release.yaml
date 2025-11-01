@@ -32,6 +32,8 @@ steps:
       - cargo binstall --locked cocogitto
       - git config user.name "Solace System Renovate Fox [bot]"
       - git config user.email renovate@solace-system.co.uk
+      - mkdir -p ~/.ssh/
+      - chmod 700 ~/.ssh/
       - echo "$$GIT_PRIVATE_KEY" > ~/.ssh/id_rsa
       - chmod 600 ~/.ssh/id_rsa
       - ssh-keyscan -t rsa codeberg.org >> ~/.ssh/known_hosts
