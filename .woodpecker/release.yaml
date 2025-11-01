@@ -37,7 +37,7 @@ steps:
       - git config user.name "$GIT_USER_NAME"
       - git config user.email "$GIT_USER_EMAIL"
 
-      # Configure ssh for Codeberg
+      # Configure ssh for auth Codeberg
       - mkdir -p ~/.ssh/
       - chmod 700 ~/.ssh/
       - echo "$$GIT_PRIVATE_KEY" > ~/.ssh/id_rsa
@@ -48,12 +48,19 @@ steps:
       # Import the PGP key
       - echo "$GPG_PRIVATE_KEY" | gpg --batch --yes --import
       - gpg --export-ownertrust | sed 's/:.*/:5:/' | gpg --import-ownertrust
-      - echo "$GPG_PASSWORD" | /usr/lib/gnupg/gpg-preset-passphrase --preset "$(gpg --with-keygrip --list-secret-keys | grep -A1 "sec" | tail -n1 | awk '{print $1}')"
-
-      # Configure git for PGP signing (no password needed now)
+      - echo "$GPG_PASSWORD" > ~/.gpg-passphrase
+      - chmod 600 ~/.gpg-passphrase
+      - |
+        cat > ~/.gpg-wrapper.sh <<'EOF'
+        #!/bin/sh
+        gpg --batch --pinentry-mode loopback --passphrase-file ~/.gpg-passphrase "$@"
+        EOF
+      - chmod +x ~/.gpg-wrapper.sh
+      - git config gpg.program ~/.gpg-wrapper.sh
       - git config gpg.format openpgp
       - git config user.signingkey $(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
       - git config commit.gpgsign true
+
       # Set up git for Codeberg
       - git config url."git@codeberg.org:".insteadOf "https://codeberg.org/"
       - cog bump --auto
