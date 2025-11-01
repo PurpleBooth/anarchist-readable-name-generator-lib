@@ -108,7 +108,7 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
 pub fn readable_name_custom_suffix<R: Rng>(seperator: &str, mut rng: R) -> String {
     let suffix = rng.random_range(0..=9);
 
-    format!("{}{}", readable_name_custom(seperator, &mut rng), suffix)
+            format!("{}{}", readable_name_custom(seperator, &mut rng), suffix)
 }
 
 /// Generate a readable name with some customization
