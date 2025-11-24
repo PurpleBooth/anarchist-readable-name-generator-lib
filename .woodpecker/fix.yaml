@@ -13,7 +13,7 @@ when:
     include: [main]
 steps:
   fix:
-    image: rust@sha256:ad8c72c693b517ed60c930839daed91a5696fa6118f031d888cd0b7055a921a3
+    image: rust@sha256:4a29b0db5c961cd530f39276ece3eb6e66925b59599324c8c19723b72a423615
     environment:
       CARGO_TERM_COLOR: always
     commands:
@@ -29,7 +29,7 @@ steps:
       - cargo test
   commit:
     depends_on: [fix]
-    image: rust@sha256:ad8c72c693b517ed60c930839daed91a5696fa6118f031d888cd0b7055a921a3
+    image: rust@sha256:4a29b0db5c961cd530f39276ece3eb6e66925b59599324c8c19723b72a423615
     environment:
       GIT_USER_NAME: *git-user-name
       GIT_USER_EMAIL: *git-user-email
