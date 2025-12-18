@@ -7,7 +7,7 @@ matrix:
   RUST: [stable, beta, nightly]
 steps:
   lint:
-    image: rust@sha256:4a29b0db5c961cd530f39276ece3eb6e66925b59599324c8c19723b72a423615
+    image: rust@sha256:48851a839d6a67370c9dbe0e709bedc138e3e404b161c5233aedcf2b717366e4
     environment:
       CARGO_TERM_COLOR: always
     commands:
