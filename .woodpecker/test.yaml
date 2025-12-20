@@ -12,5 +12,5 @@ steps:
       CARGO_TERM_COLOR: always
     commands: [rustup default $RUST, cargo test]
   audit:
-    image: woodpeckerci/plugin-trivy@sha256:82da53eb15e1ae9b1c876c19ba7c70fe37695d8523946c0b9af7fd3b58d102cb
+    image: woodpeckerci/plugin-trivy@sha256:dabf299830ab93a01581211c1fa47dbadb9b899892d87b7cf7949e544ad64f52
     commands: [trivy fs .]
