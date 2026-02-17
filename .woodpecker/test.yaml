@@ -7,7 +7,7 @@ matrix:
   RUST: [stable, beta, nightly]
 steps:
   test:
-    image: rust@sha256:5474dce321a62be62d86355e776a035587345eb385e049760cfb6b04b6fa9025
+    image: rust@sha256:80302520b7199f0504975bca59a914015e9fee088f759875dbbc238ca9509ee1
     environment:
       CARGO_TERM_COLOR: always
     commands: [rustup default $RUST, cargo test]
