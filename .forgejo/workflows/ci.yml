@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - CHANGELOG.md
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - CHANGELOG.md
+      - '**.md'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test
+    runs-on: codeberg-small
+    strategy:
+      matrix:
+        rust: [stable, beta, nightly]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Rust ${{ matrix.rust }}
+        run: rustup default ${{ matrix.rust }}
+
+      - name: Run tests
+        run: cargo test
+
+  lint:
+    name: Lint
+    runs-on: codeberg-small
+    strategy:
+      matrix:
+        rust: [stable, beta, nightly]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Rust ${{ matrix.rust }}
+        run: |
+          rustup default ${{ matrix.rust }}
+          rustup component add rustfmt clippy
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run Clippy
+        run: cargo clippy -- -D warnings
+
+  security:
+    name: Security
+    runs-on: codeberg-small
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cargo-binstall
+        run: |
+          curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+
+      - name: Run cargo audit
+        run: |
+          cargo binstall --no-confirm --locked cargo-audit
+          cargo audit
+
+      - name: Run Trivy filesystem scan
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          trivy fs --scanners vuln,secret,misconfig --exit-code 1 .
+
+  bump:
+    name: Bump version
+    needs: [test, lint, security]
+    if: github.ref == 'refs/heads/main'
+    runs-on: codeberg-small
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Rust
+        run: rustup default stable
+
+      - name: Install cargo-binstall
+        run: |
+          curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+
+      - name: Install tools
+        run: |
+          cargo binstall --no-confirm --locked cargo-edit
+          cargo binstall --no-confirm --locked cocogitto
+
+      - name: Configure Git user
+        run: |
+          git config user.name "Forgejo Actions"
+          git config user.email "forgejo-actions@codeberg.org"
+
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --yes --import
+          gpg --export-ownertrust | sed 's/:.*/:5:/' | gpg --import-ownertrust
+          echo "${{ secrets.GPG_PASSPHRASE }}" > ~/.gpg-passphrase
+          chmod 600 ~/.gpg-passphrase
+          cat > ~/.gpg-wrapper.sh <<'EOF'
+          #!/bin/sh
+          gpg --batch --pinentry-mode loopback --passphrase-file ~/.gpg-passphrase "$@"
+          EOF
+          chmod +x ~/.gpg-wrapper.sh
+          git config gpg.program ~/.gpg-wrapper.sh
+          git config gpg.format openpgp
+          KEY_ID=$(gpg --list-secret-keys --keyid-format LONG | grep sec | awk '{print $2}' | cut -d'/' -f2)
+          git config user.signingkey "$KEY_ID"
+          git config commit.gpgsign true
+
+      - name: Bump version with cog
+        run: |
+          if VERSION=$(cog bump --dry-run --auto 2>/dev/null); then
+            echo "Bumping to $VERSION"
+            cog bump --auto
+            git remote set-url origin https://token:${{ secrets.GITHUB_TOKEN }}@codeberg.org/${{ github.repository }}.git
+            git push origin main --follow-tags
+          else
+            echo "No version bump needed"
+          fi
