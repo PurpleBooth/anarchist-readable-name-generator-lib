@@ -22,7 +22,7 @@
 //! let rng = ChaChaRng::seed_from_u64(2);
 //! assert_eq!(
 //!    readable_name_custom("+", rng),
-//!    "romantic+kamalmaz"
+//!    "proficient+kamalmaz"
 //! );
 //! ```
 
@@ -64,7 +64,7 @@ use rand::seq::IndexedRandom;
 /// let rng = ChaChaRng::seed_from_u64(2);
 /// assert_eq!(
 ///    readable_name_custom("+", rng),
-///    "romantic+kamalmaz"
+///    "proficient+kamalmaz"
 /// );
 /// ```
 ///
@@ -72,13 +72,13 @@ use rand::seq::IndexedRandom;
 ///
 /// Should not panic, would panic if there were no ADJECTIVES or if NAMES (both constants guaranteed not to be empty)
 #[must_use]
-pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
+pub fn readable_name_custom<R: Rng>(separator: &str, mut rng: R) -> String {
     format!(
         "{}{}{}",
         ADJECTIVES
             .choose(&mut rng)
             .expect("This should never fail, our list is predefined"),
-        seperator,
+        separator,
         NAMES
             .choose(&mut rng)
             .expect("This should never fail, our list is predefined")
@@ -105,10 +105,10 @@ pub fn readable_name_custom<R: Rng>(seperator: &str, mut rng: R) -> String {
 ///
 /// Should not panic, would panic if there were no ADJECTIVES or if NAMES (both constants guaranteed not to be empty)
 #[must_use]
-pub fn readable_name_custom_suffix<R: Rng>(seperator: &str, mut rng: R) -> String {
+pub fn readable_name_custom_suffix<R: Rng>(separator: &str, mut rng: R) -> String {
     let suffix = rng.random_range(0..=9);
 
-    format!("{}{}", readable_name_custom(seperator, &mut rng), suffix)
+    format!("{}{}", readable_name_custom(separator, &mut rng), suffix)
 }
 
 /// Generate a readable name with some customization
@@ -159,6 +159,22 @@ mod test_readable_name_custom {
     fn it_can_add_a_random_number_to_the_end_to_make_it_unique() {
         let rng_1 = ChaChaRng::seed_from_u64(2);
         assert_eq!(readable_name_custom_suffix("_", rng_1), "dynamic_lepper3");
+    }
+
+    #[test]
+    fn adjectives_has_no_duplicates() {
+        let mut seen = std::collections::HashSet::new();
+        for adj in crate::names::ADJECTIVES {
+            assert!(seen.insert(*adj), "duplicate adjective: {adj}");
+        }
+    }
+
+    #[test]
+    fn names_has_no_duplicates() {
+        let mut seen = std::collections::HashSet::new();
+        for name in crate::names::NAMES {
+            assert!(seen.insert(*name), "duplicate name: {name}");
+        }
     }
 }
 

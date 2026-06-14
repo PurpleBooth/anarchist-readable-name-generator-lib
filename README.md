@@ -29,7 +29,7 @@ use rand_chacha::ChaChaRng;
 let rng = ChaChaRng::seed_from_u64(2);
 assert_eq!(
     readable_name_custom("+", rng),
-    "romantic+kamalmaz"
+    "proficient+kamalmaz"
 );
 ```
 

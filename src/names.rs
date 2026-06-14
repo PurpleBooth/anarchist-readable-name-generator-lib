@@ -127,7 +127,6 @@ pub const ADJECTIVES: &[&str] = &[
     "fantastic",
     "gripping",
     "hilarious",
-    "imaginative",
     "moving",
     "powerful",
     "spellbinding",
