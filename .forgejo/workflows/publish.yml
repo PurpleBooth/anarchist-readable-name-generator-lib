@@ -31,6 +31,7 @@ jobs:
 
       - name: Sign published crate
         env:
+          COSIGN_KEY: ${{ secrets.COSIGN_KEY }}
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
         run: |
           cosign sign-blob \
