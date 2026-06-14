@@ -4,11 +4,11 @@ on:
   push:
     paths-ignore:
       - CHANGELOG.md
-      - '**.md'
+      - "**.md"
   pull_request:
     paths-ignore:
       - CHANGELOG.md
-      - '**.md'
+      - "**.md"
 
 env:
   CARGO_TERM_COLOR: always

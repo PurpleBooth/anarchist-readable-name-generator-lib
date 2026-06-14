@@ -6,7 +6,7 @@ edition = "2024"
 license = "CC0-1.0"
 repository = "https://codeberg.org/PurpleBooth/anarchist-readable-name-generator-lib"
 keywords = ["names", "utility"]
-categories = ["development-tools::testing","command-line-interface"]
+categories = ["development-tools::testing"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
