@@ -15,8 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rust
-        run: rustup default stable
+      - name: Install Rust Toolchain
+        uses: https://codeberg.org/PurpleBooth/common-pipelines/actions/install-rust@main
+        with:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Cosign
         run: |
