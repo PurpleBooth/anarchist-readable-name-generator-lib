@@ -197,12 +197,6 @@ mod test_readable_name_custom {
 
 #[cfg(doctest)]
 mod test_readme {
-    macro_rules! external_doc_test {
-        ($x:expr) => {
-            #[doc = $x]
-            unsafe extern "C" {}
-        };
-    }
-
-    external_doc_test!(include_str!("../README.md"));
+    #[doc = include_str!("../README.md")]
+    pub struct ReadmeDoctests;
 }
