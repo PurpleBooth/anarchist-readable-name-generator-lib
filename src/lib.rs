@@ -135,9 +135,11 @@ mod test_readable_name_custom {
 
     #[test]
     fn it_generates_a_name_with_a_custom_separator() {
-        let rng = rand::rng();
-        let split = readable_name_custom("-", rng)
-            .split('-')
+        // Use '|' because some adjectives (e.g. "open-minded") contain
+        // hyphens, making '-' an unreliable separator for simple splitting.
+        let rng = ChaChaRng::seed_from_u64(2);
+        let split = readable_name_custom("|", rng)
+            .split('|')
             .map(String::from)
             .collect::<Vec<_>>();
         assert!(!split.first().unwrap().is_empty());
