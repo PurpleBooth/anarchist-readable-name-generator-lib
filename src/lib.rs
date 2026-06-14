@@ -9,7 +9,7 @@
 //! ```
 //! use anarchist_readable_name_generator_lib::readable_name;
 //!
-//! assert!(readable_name().len() > 0)
+//! assert!(!readable_name().is_empty())
 //! ```
 //!
 //! You can also pass a seed or change the separator to give you predictability or minor customization.
@@ -85,7 +85,7 @@ pub fn readable_name_custom<R: Rng>(separator: &str, mut rng: R) -> String {
     )
 }
 
-/// Generate a readable name with some customization and a random numeric suffix
+/// Generate a readable name with a custom separator and a random numeric suffix
 ///
 /// # Examples
 ///
@@ -111,14 +111,14 @@ pub fn readable_name_custom_suffix<R: Rng>(separator: &str, mut rng: R) -> Strin
     format!("{}{}", readable_name_custom(separator, &mut rng), suffix)
 }
 
-/// Generate a readable name with some customization
+/// Generate a readable name using the default underscore separator
 ///
 /// # Examples
 ///
 /// ```
 /// use anarchist_readable_name_generator_lib::readable_name;
 ///
-/// assert!(readable_name().len() > 0)
+/// assert!(!readable_name().is_empty())
 /// ```
 #[must_use]
 pub fn readable_name() -> String {
@@ -128,7 +128,7 @@ pub fn readable_name() -> String {
 
 #[cfg(test)]
 mod test_readable_name_custom {
-    use super::{readable_name_custom, readable_name_custom_suffix};
+    use super::{readable_name, readable_name_custom, readable_name_custom_suffix};
 
     use rand::prelude::*;
     use rand_chacha::ChaChaRng;
@@ -159,6 +159,23 @@ mod test_readable_name_custom {
     fn it_can_add_a_random_number_to_the_end_to_make_it_unique() {
         let rng_1 = ChaChaRng::seed_from_u64(2);
         assert_eq!(readable_name_custom_suffix("_", rng_1), "dynamic_lepper3");
+    }
+
+    #[test]
+    fn readable_name_uses_default_underscore_separator() {
+        let name = readable_name();
+        let parts: Vec<&str> = name.split('_').collect();
+        assert_eq!(parts.len(), 2);
+        assert!(!parts[0].is_empty());
+        assert!(!parts[1].is_empty());
+    }
+
+    #[test]
+    fn readable_name_custom_suffix_ends_with_digit() {
+        let rng = rand::rng();
+        let name = readable_name_custom_suffix("_", rng);
+        let last_char = name.chars().last().expect("name should not be empty");
+        assert!(last_char.is_ascii_digit());
     }
 
     #[test]

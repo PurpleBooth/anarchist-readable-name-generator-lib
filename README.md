@@ -13,16 +13,16 @@ Typically, for throwaway purposes.
 It's possible to simply generate a random name
 
 ```rust
-    use anarchist_readable_name_generator_lib::readable_name;
+use anarchist_readable_name_generator_lib::readable_name;
 
-assert!(readable_name().len() > 0);
+assert!(!readable_name().is_empty());
 ```
 
 You can also pass a seed or change the separator to give you
 predictability or minor customization.
 
 ```rust
-    use anarchist_readable_name_generator_lib::readable_name_custom;
+use anarchist_readable_name_generator_lib::readable_name_custom;
 use rand::prelude::*;
 use rand_chacha::ChaChaRng;
 
@@ -36,7 +36,7 @@ assert_eq!(
 You can also increase entropy a little by suffixing a random number
 
 ```rust
- use anarchist_readable_name_generator_lib::readable_name_custom_suffix;
+use anarchist_readable_name_generator_lib::readable_name_custom_suffix;
 use rand::prelude::*;
 use rand_chacha::ChaChaRng;
 
