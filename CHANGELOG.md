@@ -2,6 +2,60 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## v0.2.2 - 2026-06-14
+#### Bug Fixes
+- (**ci**) align clippy with Justfile and add missing cosign key - (de0ad30) - Billie Thompson
+- flaky test from hyphenated adjective - (54d70ef) - Billie Thompson
+- correct Cargo.toml category and format workflows - (06b693d) - Billie Thompson
+- correct docs, Cargo.toml typo, and add behaviour tests - (f213da8) - Billie Thompson
+- remove duplicate adjective and correct seperator typo - (1420562) - Billie Thompson
+#### Continuous Integration
+- migrate from Woodpecker to Forgejo Actions - (cbcfc6a) - Billie Thompson
+- use rust image as it has gpg and git - (3768391) - Billie Thompson
+- sign fix commits - (007c210) - Billie Thompson
+- add the missing passphrase - (455f03a) - Billie Thompson
+- try using script to set password - (e558653) - Billie Thompson
+- remove empty step - (835490b) - Billie Thompson
+- preset the passphrase - (7f7a189) - Billie Thompson
+- make name a bit nicer - (205ffb7) - Billie Thompson
+- test auto fix - (43a82b0) - Billie Thompson
+- set username and email correctlly - (a132029) - Billie Thompson
+- correct email - (ff74887) - Billie Thompson
+- import gpg key - (ce9d537) - Billie Thompson
+- sign commits - (2ea9e7e) - Billie Thompson
+- push the tags - (a627abe) - Billie Thompson
+- use ssh to push - (dd6d545) - Billie Thompson
+- specify remote more explicitly - (de978b6) - Billie Thompson
+- create ssh dir - (6e340e4) - Billie Thompson
+- add missing deps - (c73f690) - Billie Thompson
+- just push from the rust image - (f5c6038) - Billie Thompson
+#### Refactoring
+- replace unsafe extern hack with doc struct - (f342cd0) - Billie Thompson
+#### Miscellaneous Chores
+- (**deps**) update rust docker digest to 5474dce - (4b3b3a1) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to bed2d7f - (488e555) - Solace System Renovate Fox
+- (**deps**) update woodpeckerci/plugin-trivy docker digest to da92938 - (f8b8646) - Solace System Renovate Fox
+- (**deps**) update woodpeckerci/plugin-git docker digest to 589c46f - (856dc91) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to 65734d2 - (2f3e7c1) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to 910b9dc - (88a7fd6) - Solace System Renovate Fox
+- (**deps**) update woodpeckerci/plugin-trivy docker digest to dabf299 - (28810dd) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to 48851a8 - (ded1c91) - Solace System Renovate Fox
+- (**deps**) update woodpeckerci/plugin-trivy docker digest to 82da53e - (fbb20f4) - Solace System Renovate Fox
+- (**deps**) update woodpeckerci/plugin-trivy docker digest to cc6359b - (737740e) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to 4a29b0d - (4f76a48) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to ad8c72c - (2aff79c) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to 638747a - (b744e9f) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to 087fe68 - (1426246) - Solace System Renovate Fox
+- (**deps**) update rust docker digest to a2d7edb - (de74da1) - Solace System Renovate Fox
+- (**deps**) pin rust docker tag to c0601cf - (78f43f8) - Solace System Renovate Fox
+- (**deps**) pin dependencies - (c82fa38) - Solace System Renovate Fox
+- (**version**) v0.2.1 - (1d1502e) - Solace System Renovate Fox [bot]
+- (**version**) v0.2.1 - (1ad3a68) - Solace System Renovate Fox [bot]
+- formatting - (016083a) - Solace System Renovate Fox [bot]
+- formatting - (1ca37ef) - Solace System Renovate Fox [bot]
+
+- - -
+
 ## v0.2.1 - 2025-11-01
 #### Bug Fixes
 - use ssh for cloning - (caceca6) - Billie Thompson
